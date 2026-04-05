@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ligue Horizon Sport</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {margin:0;font-family:'Montserrat',Arial;background:#0b1e2d;color:white;--blue:#4fc3f7;--silver:linear-gradient(90deg,#cfd8dc,#90a4ae);}
+
+header{position:relative;height:340px;background:url('team.jpg') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+header::before{content:"";position:absolute;width:100%;height:100%;background:rgba(11,30,45,0.6);}
+header::after{content:"";position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:radial-gradient(circle,rgba(79,195,247,0.15),transparent 60%);animation:glow 10s linear infinite;}
+@keyframes glow{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+header .content{position:relative;z-index:1;}
+
+h1{font-family:'Bebas Neue';font-size:48px;letter-spacing:2px;}
+
+nav{background:#0f2f47;display:flex;justify-content:center;gap:20px;padding:15px;flex-wrap:wrap;box-shadow:0 5px 10px rgba(0,0,0,0.5);}
+nav a{color:var(--blue);text-decoration:none;font-weight:bold;position:relative;transition:0.3s;}
+nav a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--silver);transition:0.3s;}
+nav a:hover::after{width:100%}
+nav a:hover{color:white;transform:scale(1.05)}
+
+section{padding:40px 20px;max-width:1100px;margin:auto;}
+h2{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+select,input{padding:8px;margin:5px;border-radius:5px;border:none;}
+
+table{width:100%;border-collapse:collapse;margin-top:15px;}
+th,td{padding:10px;border-bottom:1px solid #4fc3f7;text-align:center;}
+th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.player-card{background:#123a5a;padding:10px;margin:5px 0;border-radius:10px;cursor:pointer;transition:0.3s;}
+.player-card:hover{transform:translateY(-3px);}
+
+/* MODAL JOUEUR */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;z-index:10;}
+.modal-content{background:#123a5a;padding:25px;border-radius:15px;max-width:400px;width:90%;text-align:center;}
+.close{cursor:pointer;float:right;font-size:20px;}
+
+/* compte */
+.account-btn{position:absolute;top:20px;right:20px;background:rgba(15,47,71,0.9);padding:10px 15px;border-radius:25px;color:var(--blue);cursor:pointer;z-index:3;border:1px solid rgba(192,192,192,0.4);}
+.account-menu{display:none;position:absolute;top:60px;right:20px;background:#123a5a;border-radius:10px;padding:10px;z-index:4;}
+.account-menu a{display:block;padding:8px;color:white;text-decoration:none;}
+.account-menu a:hover{background:var(--blue);color:#0b1e2d;border-radius:5px;}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="account-btn" onclick="toggleMenu()">👤 Mon compte</div>
+<div class="account-menu" id="accountMenu">
+<a href="#">Mon profil</a>
+<a href="#">Mes statistiques</a>
+<a href="#">Mon équipe</a>
+<a href="#">Alignement (Capitaine)</a>
+<a href="#">Gestion équipe</a>
+<a href="#">Déconnexion</a>
+</div>
+<div class="content" style="display:flex;align-items:center;gap:15px;">
+  <img src="logo.png" style="height:70px;">
+  <h1>LIGUE HORIZON SPORT</h1>
+</div>
+</header>
+
+<nav>
+<a href="#home">Accueil</a>
+<a href="#schedule">Calendrier</a>
+<a href="#standings">Classement</a>
+<a href="#stats">Statistiques</a>
+<a href="#players">Joueurs</a>
+<a href="#rules">Règlements</a>
+<a href="#info">Informations</a>
+</nav>
+
+<section id="home">
+<h2>Accueil</h2>
+<p>Bienvenue sur le site officiel de la Ligue Horizon Sport. Une ligue conçue pour offrir une expérience de dek hockey de qualité avec une gestion sérieuse, un arbitrage rigoureux et une ambiance compétitive.</p>
+
+<h3>📸 Photos</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;">
+  <img src="team.jpg" style="width:100%;border-radius:10px;object-fit:cover;">
+  <img src="team.jpg" style="width:100%;border-radius:10px;object-fit:cover;">
+  <img src="team.jpg" style="width:100%;border-radius:10px;object-fit:cover;">
+</div>
+
+<h3>📰 Nouvelles</h3>
+<p>• Début de la saison prévu à la mi-mai à Princeville<br>
+• Joueur de la semaine annoncé chaque semaine<br>
+• Séries éliminatoires en septembre</p>
+</section>
+
+<section id="schedule">
+<h2>Calendrier</h2>
+<select id="teamFilter"><option value="all">Toutes les équipes</option><option value="A">Équipe A</option><option value="B">Équipe B</option></select>
+<table id="gamesTable">
+<tr><th>Date</th><th>Match</th><th>Heure</th></tr>
+<tr><td>20 mai</td><td>A vs B</td><td>19h</td></tr>
+<tr><td>27 mai</td><td>B vs A</td><td>20h</td></tr>
+</table>
+</section>
+
+<section id="standings">
+<h2>Classement</h2>
+<table id="standingsTable">
+<tr><th>Équipe</th><th>V</th><th>D</th><th>BP</th><th>BC</th><th>Diff</th><th>PTS</th></tr>
+<tr><td>Équipe A</td><td>3</td><td>1</td><td>12</td><td>8</td><td>+4</td><td>6</td></tr>
+<tr><td>Équipe B</td><td>1</td><td>3</td><td>7</td><td>11</td><td>-4</td><td>2</td></tr>
+</table>
+</section>
+
+<section id="stats">
+<h2>Statistiques individuelles</h2>
+<table id="statsTable">
+<tr><th>Joueur</th><th>Buts</th><th>Passes</th><th>Points</th></tr>
+<tr><td>Gabriel Beauvillier</td><td>5</td><td>3</td><td>8</td></tr>
+<tr><td>Joueur Test</td><td>2</td><td>4</td><td>6</td></tr>
+<tr><td>Marc Tremblay</td><td>3</td><td>1</td><td>4</td></tr>
+</table>
+</section>
+
+<section id="players">
+<h2>Joueurs</h2>
+<input id="search" placeholder="Rechercher">
+<div id="playersList"></div>
+</section>
+
+<section id="rules">
+<h2>Règlements</h2>
+<p>
+- Respect obligatoire envers les arbitres et les joueurs<br>
+- Format 4 contre 4<br>
+- Matchs de 2 périodes<br>
+- Aucun comportement antisportif toléré<br>
+- Les décisions de l’arbitre sont finales
+</p>
+<p><em>Document complet à venir</em></p>
+</section>
+<section id="info">
+<h2>Informations</h2>
+<p>
+Ligue amicale de dek hockey - Horizon Sport<br>
+Lieu été : Parc multisport de Princeville<br>
+Lieu hiver : Pavillon Agri-Sport de Victoriaville<br>
+Format : 4 contre 4<br>
+Saison : mi-mai à mi-septembre
+</p>
+<p><em>Plus d’informations détaillées à venir</em></p>
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="playerModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">✖</span>
+<h2 id="modalName"></h2>
+<p id="modalTeam"></p>
+<p id="modalStats"></p>
+</div>
+</div>
+
+<script>
+
+const players=[
+{name:'Gabriel Beauvillier',team:'A',g:5,a:3},
+{name:'Joueur Test',team:'B',g:2,a:4},
+{name:'Marc Tremblay',team:'A',g:3,a:1}
+];
+
+function renderPlayers(list){
+const c=document.getElementById('playersList');c.innerHTML='';
+list.forEach(p=>{
+c.innerHTML+=`<div class="player-card" onclick="openPlayer('${p.name}')">${p.name}</div>`;
+});}
+
+renderPlayers(players);
+
+document.getElementById('search').addEventListener('input',e=>{
+const val=e.target.value.toLowerCase();
+renderPlayers(players.filter(p=>p.name.toLowerCase().includes(val)));
+});
+
+function openPlayer(name){
+const p=players.find(x=>x.name===name);
+document.getElementById('modalName').innerText=p.name;
+document.getElementById('modalTeam').innerText='Équipe: '+p.team;
+document.getElementById('modalStats').innerText=`Buts: ${p.g} | Passes: ${p.a} | Points: ${p.g+p.a}`;
+document.getElementById('playerModal').style.display='flex';
+}
+
+function closeModal(){document.getElementById('playerModal').style.display='none';}
+
+function toggleMenu(){const m=document.getElementById('accountMenu');m.style.display=m.style.display==='block'?'none':'block';}
+
+</script>
+
+</body>
+</html>
