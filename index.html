@@ -187,10 +187,10 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
 <section id="schedule">
   <h2>Calendrier & Résultats</h2>
 
-  <div class="schedule-controls" style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+  <div class="schedule-controls">
     <div class="control-group">
-      <label style="display:block; font-size: 12px; margin-bottom: 5px; color: var(--blue);">Filtrer par équipe :</label>
-      <select id="teamFilter" onchange="filterSchedule()" style="min-width: 180px;">
+      <label>Équipe</label>
+      <select id="teamFilter" onchange="filterSchedule()">
         <option value="all">Toutes les équipes</option>
         <option value="Thrashers">Thrashers</option>
         <option value="Canadiens">Canadiens</option>
@@ -200,15 +200,59 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
     </div>
 
     <div class="control-group">
-      <label style="display:block; font-size: 12px; margin-bottom: 5px; color: var(--blue);">Choisir une date :</label>
-      <input type="date" id="dateFilter" onchange="filterSchedule()" style="min-width: 180px; background: white; color: black;">
+      <label>Date précise</label>
+      <input type="date" id="dateFilter" onchange="filterSchedule()">
     </div>
-    
-    <button onclick="resetFilters()" style="margin-top: 22px; padding: 8px 15px; border-radius: 5px; border: none; background: var(--blue); color: #0b1e2d; font-weight: bold; cursor: pointer;">Réinitialiser</button>
   </div>
 
   <div class="calendar-container" id="calendarContainer">
     </div>
+</section>
+
+/* BARRE DE FILTRES MODERNE */
+.schedule-controls {
+    display: flex;
+    gap: 20px;
+    background: rgba(15, 47, 71, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    align-items: center;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.control-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--blue);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.schedule-controls select, 
+.schedule-controls input {
+    background: #0b1e2d;
+    border: 1px solid rgba(79, 195, 247, 0.4);
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'Montserrat';
+    outline: none;
+    transition: 0.3s;
+}
+
+.schedule-controls select:focus, 
+.schedule-controls input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 10px rgba(79, 195, 247, 0.2);
+}  
 </section>
 </section>
 
@@ -386,12 +430,32 @@ function toggleMenu(){const m=document.getElementById('accountMenu');m.style.dis
         card.style.display = (showTeam && showDate) ? 'grid' : 'none';
     });
 }
+function filterSchedule() {
+    const team = document.getElementById('teamFilter').value;
+    const dateInput = document.getElementById('dateFilter').value;
+    const cards = document.querySelectorAll('.match-card');
 
-function resetFilters() {
-    document.getElementById('teamFilter').value = 'all';
-    document.getElementById('dateFilter').value = '';
-    filterSchedule();
+    cards.forEach(card => {
+        let showTeam = (team === 'all' || card.innerText.includes(team));
+        let showDate = true;
+
+        if (dateInput) {
+            const day = card.querySelector('.date-day').innerText.padStart(2, '0');
+            const monthText = card.querySelector('.date-month').innerText.toLowerCase();
+            
+            const selectedDate = new Date(dateInput + "T00:00:00");
+            const selectedDay = selectedDate.getDate().toString().padStart(2, '0');
+            
+            const monthsFR = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+            const selectedMonth = monthsFR[selectedDate.getMonth()];
+
+            showDate = (day === selectedDay && monthText === selectedMonth);
+        }
+
+        card.style.display = (showTeam && showDate) ? 'grid' : 'none';
+    });
 }
+
 </script>
 
 </body>
