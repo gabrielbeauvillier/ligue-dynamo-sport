@@ -54,6 +54,37 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
 .account-menu{display:none;position:absolute;top:60px;right:20px;background:#123a5a;border-radius:10px;padding:10px;z-index:4;}
 .account-menu a{display:block;padding:8px;color:white;text-decoration:none;}
 .account-menu a:hover{background:var(--blue);color:#0b1e2d;border-radius:5px;}
+  .match-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #4fc3f7;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.match-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: bold;
+}
+
+.match-time {
+  font-size: 14px;
+  opacity: 0.8;
+}
 </style>
 </head>
 
@@ -115,11 +146,45 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
 <section id="schedule">
 <h2>Calendrier</h2>
 <select id="teamFilter"><option value="all">Toutes les équipes</option><option value="A">Équipe A</option><option value="B">Équipe B</option></select>
-<table id="gamesTable">
-<tr><th>Date</th><th>Match</th><th>Heure</th></tr>
-<tr><td>20 mai</td><td>A vs B</td><td>19h</td></tr>
-<tr><td>27 mai</td><td>B vs A</td><td>20h</td></tr>
-</table>
+<div class="calendar">
+
+  <div class="match-row">
+    <div class="team">
+      <img src="logo-equipe1.png">
+      <span>Équipe A</span>
+    </div>
+
+    <div class="match-info">
+      <span>VS</span>
+    </div>
+
+    <div class="team">
+      <span>Équipe B</span>
+      <img src="logo-equipe2.png">
+    </div>
+
+    <div class="match-time">19h</div>
+  </div>
+
+  <div class="match-row">
+    <div class="team">
+      <img src="logo-equipe3.png">
+      <span>Équipe C</span>
+    </div>
+
+    <div class="match-info">
+      <span>VS</span>
+    </div>
+
+    <div class="team">
+      <span>Équipe D</span>
+      <img src="logo-equipe4.png">
+    </div>
+
+    <div class="match-time">20h</div>
+  </div>
+
+</div>
 </section>
 
 <section id="standings">
