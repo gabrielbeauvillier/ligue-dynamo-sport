@@ -190,47 +190,86 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
 </section>
 
 <section id="schedule">
-<h2>Calendrier</h2>
-<select id="teamFilter"><option value="all">Toutes les équipes</option><option value="A">Équipe A</option><option value="B">Équipe B</option></select>
-<div class="calendar">
-
-  <div class="match-row">
-    <div class="team">
-      <img src="logo-equipe1.png">
-      <span>Équipe A</span>
-    </div>
-
-    <div class="match-info">
-      <span>VS</span>
-    </div>
-
-    <div class="team">
-      <span>Équipe B</span>
-      <img src="logo-equipe2.png">
-    </div>
-
-    <div class="match-time">19h</div>
+  <h2>Calendrier des Matchs</h2>
+  
+  <div style="margin-bottom: 20px;">
+    <label>Filtrer par équipe :</label>
+    <select id="teamFilter">
+      <option value="all">Tous les matchs</option>
+      <option value="Thrashers">Thrashers</option>
+      <option value="Ducks">Ducks</option>
+      <option value="Vikings">Vikings</option>
+      <option value="Canadiens">Canadiens</option>
+    </select>
   </div>
 
-  <div class="match-row">
-    <div class="team">
-      <img src="logo-equipe3.png">
-      <span>Équipe C</span>
+  <div class="calendar-container">
+    
+    <div class="match-card">
+      <div class="team-info">
+        <div class="team-logo">T</div>
+        <span>Thrashers</span>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="team-info">
+        <div class="team-logo">D</div>
+        <span>Ducks</span>
+      </div>
+      <div class="match-status">
+        <span class="time">19:00</span>
+        <span class="location">Princeville</span>
+      </div>
     </div>
 
-    <div class="match-info">
-      <span>VS</span>
+    <div class="match-card">
+      <div class="team-info">
+        <div class="team-logo">V</div>
+        <span>Vikings</span>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="team-info">
+        <div class="team-logo">C</div>
+        <span>Canadiens</span>
+      </div>
+      <div class="match-status">
+        <span class="time">20:00</span>
+        <span class="location">Princeville</span>
+      </div>
     </div>
 
-    <div class="team">
-      <span>Équipe D</span>
-      <img src="logo-equipe4.png">
+    <div class="match-card">
+      <div class="team-info">
+        <div class="team-logo">D</div>
+        <span>Ducks</span>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="team-info">
+        <div class="team-logo">V</div>
+        <span>Vikings</span>
+      </div>
+      <div class="match-status">
+        <span class="time">21:00</span>
+        <span class="location">Princeville</span>
+      </div>
     </div>
 
-    <div class="match-time">20h</div>
+    <div class="match-card">
+      <div class="team-info">
+        <div class="team-logo">C</div>
+        <span>Canadiens</span>
+      </div>
+      <div class="vs-badge">VS</div>
+      <div class="team-info">
+        <div class="team-logo">T</div>
+        <span>Thrashers</span>
+      </div>
+      <div class="match-status">
+        <span class="time">22:00</span>
+        <span class="location">Princeville</span>
+      </div>
+    </div>
+
   </div>
-
-</div>
 </section>
 
 <section id="standings">
