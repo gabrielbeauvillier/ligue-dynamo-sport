@@ -156,21 +156,33 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
   /* BARRE DE FILTRES MODERNE */
 .schedule-controls {
     display: flex;
-    gap: 20px;
-    background: rgba(15, 47, 71, 0.5);
+    gap: 15px;
+    margin-bottom: 30px;
+    background: rgba(15, 47, 71, 0.4);
     padding: 20px;
     border-radius: 12px;
-    margin-bottom: 30px;
     border: 1px solid rgba(79, 195, 247, 0.2);
-    align-items: center;
+    flex-wrap: wrap; /* Empêche le débordement à droite */
+    max-width: 100%; /* S'assure de ne pas dépasser l'écran */
+    box-sizing: border-box; /* Inclut le padding dans le calcul de la largeur */
 }
 
 .control-group {
-    display: flex;
-    flex-direction: column;
     flex: 1;
+    min-width: 200px; /* Force le passage à la ligne sur petit écran */
 }
 
+  /* Style moderne pour le calendrier */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Rend l'icône du calendrier blanche pour fond sombre */
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+  
 .control-group label {
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
