@@ -126,105 +126,56 @@ th{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
 .canadiens-accent { border-left-color: #af1e2d; }
 .vikings-accent { border-left-color: #90a4ae; }
 .ducks-accent { border-left-color: #00685e; }
-  /* DESIGN DES FILTRES DYNAMO */
-.schedule-controls select, 
-.schedule-controls input {
-    background: #0b1e2d; /* Fond sombre assorti */
-    border: 1px solid rgba(79, 195, 247, 0.4);
-    color: white;
-    padding: 12px;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif; /* TA NOUVELLE POLICE */
-    font-size: 15px;
-    font-weight: 500;
-    outline: none;
-    cursor: pointer;
-    transition: 0.3s;
-    width: 100%;
-}
-
-.schedule-controls select option {
-    background: #0f2f47; /* Couleur du menu déroulant */
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.schedule-controls select:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 10px rgba(79, 195, 247, 0.2);
-}
-  /* BARRE DE FILTRES MODERNE */
 .schedule-controls {
     display: flex;
     gap: 15px;
-    margin-bottom: 30px;
+    margin: 20px auto 30px auto; /* Centre la barre */
     background: rgba(15, 47, 71, 0.4);
     padding: 20px;
     border-radius: 12px;
     border: 1px solid rgba(79, 195, 247, 0.2);
-    flex-wrap: wrap; /* Empêche le débordement à droite */
-    max-width: 100%; /* S'assure de ne pas dépasser l'écran */
-    box-sizing: border-box; /* Inclut le padding dans le calcul de la largeur */
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    max-width: 1200px; /* Aligné sur la largeur de ton calendrier */
+    width: 95%; /* Évite de toucher les bords sur mobile */
 }
 
 .control-group {
     flex: 1;
-    min-width: 200px; /* Force le passage à la ligne sur petit écran */
+    min-width: 250px;
 }
 
-  /* Style moderne pour le calendrier */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Rend l'icône du calendrier blanche pour fond sombre */
-    cursor: pointer;
-    opacity: 0.7;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-}
-  
 .control-group label {
     font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: var(--blue);
+    display: block;
     margin-bottom: 8px;
-    font-weight: 800; /* Très gras pour le côté sport */
-    opacity: 0.9;
+    font-weight: 700;
 }
 
 .schedule-controls select, 
 .schedule-controls input {
-    background: rgba(11, 30, 45, 0.8);
+    width: 100%;
+    background: #0b1e2d;
     border: 1px solid rgba(79, 195, 247, 0.4);
     color: white;
-    padding: 12px 15px;
+    padding: 12px;
     border-radius: 8px;
-    /* AMÉLIORATION DE LA POLICE */
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
+    font-size: 15px;
     outline: none;
-    transition: all 0.3s ease;
+    box-sizing: border-box;
     cursor: pointer;
-    appearance: none; /* Enlève le style par défaut sur mobile */
 }
 
-/* Petit effet au survol pour faire plus interactif */
-.schedule-controls select:hover, 
-.schedule-controls input:hover {
-    border-color: var(--blue);
-    background: rgba(15, 47, 71, 0.9);
+/* Icône du calendrier blanche */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
 }
-
-.schedule-controls select:focus, 
-.schedule-controls input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 10px rgba(79, 195, 247, 0.2);
-}  
-</section>
 </style>
 </head>
 
@@ -286,30 +237,32 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 <section id="schedule">
   <h2>Calendrier & Résultats</h2>
 
-  <div class="schedule-controls">
+<div class="schedule-controls">
     <div class="control-group">
-      <label>Équipe</label>
-      <select id="teamFilter" onchange="filterSchedule()">
-        <option value="all">Toutes les équipes</option>
-        <option value="Thrashers">Thrashers</option>
-        <option value="Canadiens">Canadiens</option>
-        <option value="Vikings">Vikings</option>
-        <option value="Ducks">Ducks</option>
-      </select>
+        <label>Équipe</label>
+        <select id="teamFilter" onchange="filterSchedule()">
+            <option value="all">Toutes les équipes</option>
+            <option value="Thrashers">Thrashers</option>
+            <option value="Canadiens">Canadiens</option>
+            <option value="Vikings">Vikings</option>
+            <option value="Ducks">Ducks</option>
+        </select>
     </div>
-
     <div class="control-group">
-      <label>Date précise</label>
-      <input type="date" id="dateFilter" onchange="filterSchedule()">
+        <label>Date précise</label>
+        <input type="date" id="dateFilter" onchange="filterSchedule()">
     </div>
-  </div>
+</div>
 
-  <div class="calendar-container" id="calendarContainer">
-    <div class="match-card thrashers-accent">
-      <div class="match-date-badge">
-        <span class="date-day">15</span>
-        <span class="date-month">Mai</span>
-      </div>
+<div class="calendar-container" id="calendarContainer">
+    ```
+
+### Ce que ça corrige :
+1.  **L'alignement :** Le `margin: 20px auto` centre la barre de recherche au milieu de l'écran.
+2.  **Le débordement :** Le `max-width: 1200px` et `width: 95%` forcent la barre à rester dans les mêmes limites que tes cartes de match.
+3.  **Le look :** Le sélecteur de date (calendrier) sera maintenant sombre avec une icône blanche, ce qui est beaucoup plus professionnel pour **Dynamo Sport**.
+
+Est-ce que tu vois bien les deux blocs de styles à la ligne 108 qu'il faut fusionner ?
       <div class="team-info"><span>Thrashers</span></div>
       <div class="score-box">5 - 2</div>
       <div class="team-info" style="justify-content: flex-end;"><span>Ducks</span></div>
