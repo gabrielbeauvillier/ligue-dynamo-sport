@@ -176,6 +176,48 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
+  .schedule-controls {
+    display: flex;
+    gap: 15px;
+    margin: 20px auto;
+    background: rgba(15, 47, 71, 0.4);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    max-width: 1200px;
+}
+
+.control-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.control-group label {
+    font-family: 'Montserrat', sans-serif;
+    color: #4fc3f7;
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.schedule-controls select, 
+.schedule-controls input {
+    width: 100%;
+    background: #0b1e2d;
+    border: 1px solid rgba(79, 195, 247, 0.4);
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Rend l'icône du calendrier blanche */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
 </style>
 </head>
 
@@ -255,14 +297,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 </div>
 
 <div class="calendar-container" id="calendarContainer">
-    ```
 
-### Ce que ça corrige :
-1.  **L'alignement :** Le `margin: 20px auto` centre la barre de recherche au milieu de l'écran.
-2.  **Le débordement :** Le `max-width: 1200px` et `width: 95%` forcent la barre à rester dans les mêmes limites que tes cartes de match.
-3.  **Le look :** Le sélecteur de date (calendrier) sera maintenant sombre avec une icône blanche, ce qui est beaucoup plus professionnel pour **Dynamo Sport**.
-
-Est-ce que tu vois bien les deux blocs de styles à la ligne 108 qu'il faut fusionner ?
       <div class="team-info"><span>Thrashers</span></div>
       <div class="score-box">5 - 2</div>
       <div class="team-info" style="justify-content: flex-end;"><span>Ducks</span></div>
