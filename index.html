@@ -516,9 +516,7 @@ function filterSchedule() {
             showDate = (day === selectedDay && monthText === selectedMonth);
         }
 
-        // LA CORRECTION EST ICI : 
-        // 1. On utilise 'grid' pour garder le score au centre.
-        // 2. On place cette ligne ICI (juste avant l'accolade du bas).
+        // LA CORRECTION FINALE :
         card.style.display = (showTeam && showDate) ? 'grid' : 'none';
     });
 }
