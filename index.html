@@ -239,6 +239,38 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 700; /* Tout le texte en gras */
     padding: 10px; /* Plus d'espace */
 }
+ /* Force l'affichage du format français JJ/MM/AAAA */
+#dateFilter::before {
+    content: attr(data-placeholder);
+    margin-right: 0.5em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#dateFilter:focus::before,
+#dateFilter:valid::before {
+    content: "";
+    display: none;
+}
+
+/* Cache le format yyyy-mm-dd par défaut du navigateur */
+#dateFilter::-webkit-datetime-edit-year-field,
+#dateFilter::-webkit-datetime-edit-month-field,
+#dateFilter::-webkit-datetime-edit-day-field,
+#dateFilter::-webkit-datetime-edit-text {
+    color: transparent;
+}
+
+/* Réaffiche les chiffres quand on commence à saisir ou quand c'est sélectionné */
+#dateFilter:focus::-webkit-datetime-edit-year-field,
+#dateFilter:focus::-webkit-datetime-edit-month-field,
+#dateFilter:focus::-webkit-datetime-edit-day-field,
+#dateFilter:focus::-webkit-datetime-edit-text,
+#dateFilter:valid::-webkit-datetime-edit-year-field,
+#dateFilter:valid::-webkit-datetime-edit-month-field,
+#dateFilter:valid::-webkit-datetime-edit-day-field,
+#dateFilter:valid::-webkit-datetime-edit-text {
+    color: white;
+} 
 </style>
 </head>
 
