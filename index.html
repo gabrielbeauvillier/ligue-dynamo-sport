@@ -516,8 +516,12 @@ function filterSchedule() {
             showDate = (day === selectedDay && monthText === selectedMonth);
         }
 
-        // CETTE LIGNE ÉTAIT COUPÉE DANS TON FICHIER :
-        card.style.display = (showTeam && showDate) ? 'grid' : 'none';
+        // LA SOLUTION : On force le mode 'grid' pour le centrage
+        if (showTeam && showDate) {
+            card.style.setProperty('display', 'grid', 'important');
+        } else {
+            card.style.display = 'none';
+        }
     });
 }
 
