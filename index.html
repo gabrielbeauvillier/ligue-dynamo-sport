@@ -176,7 +176,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
-  .schedule-controls {
+  /* --- BLOC NETTOYÉ POUR PRINCEVILLE --- */
+.schedule-controls {
     display: flex;
     gap: 15px;
     margin: 20px auto;
@@ -203,8 +204,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-transform: uppercase;
 }
 
+/* Style unique pour les menus et la date */
 .schedule-controls select, 
-.schedule-controls input {
+#dateFilter {
     width: 100%;
     background: #0b1e2d;
     border: 1px solid rgba(79, 195, 247, 0.4);
@@ -212,57 +214,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 12px;
     border-radius: 8px;
     font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+    appearance: none;
+}
+
+/* Cache le curseur texte sur la date */
+#dateFilter {
+    caret-color: transparent;
 }
 
 /* Rend l'icône du calendrier blanche */
-<input type="date" id="dateFilter" onchange="filterSchedule()" onclick="this.showPicker()" data-placeholder="JJ/MM/AAAA">
+input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
-  /* Amélioration du look de la liste déroulante */
-.schedule-controls select {
-    font-size: 16px; /* Texte plus gros */
-    font-weight: 700; /* Texte en gras par défaut */
-    appearance: none; /* Enlève la flèche par défaut pour la styliser */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234fc3f7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 16px;
-    padding-right: 40px; /* Espace pour la nouvelle flèche */
-}
-
-/* Style des options pour éviter le look "vieux Windows" */
-.schedule-controls select option {
-    background-color: #0b1e2d; /* Fond sombre de ton site */
-    color: white; /* Texte blanc */
-    font-weight: 700; /* Tout le texte en gras */
-    padding: 10px; /* Plus d'espace */
-}
-#dateFilter {
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-    font-weight: 600;
-}
-
-/* Pour s'assurer que le texte "Choisir une date" est bien visible */
-#dateFilter::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 600;
-}
-  /* Amélioration du champ date pour Princeville */
-#dateFilter {
-    cursor: pointer;          /* Transforme le curseur en main */
-    caret-color: transparent; /* Cache la barre de saisie clignotante */
-    font-family: inherit;
-    font-weight: 600;
-    text-align: left;
-}
 
 #dateFilter::placeholder {
-    color: white;             /* Rend le texte "Choisir une date" bien blanc */
-    opacity: 1;               /* S'assure qu'il n'est pas transparent */
+    color: white;
+    opacity: 1;
 }
 </style>
 </head>
@@ -337,12 +308,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 <option value="Ducks">Ducks</option>
             </select>
         </div>
-     <div class="control-group">
+   <div class="control-group">
     <label>Date précise</label>
     <input type="text" id="dateFilter" placeholder="Choisir une date" 
-           readonly 
-           onclick="this.type='date'; this.showPicker();" 
-           onchange="filterSchedule()"
+           onfocus="this.type='date'; this.showPicker();" 
+           onchange="filterSchedule()" 
            onblur="if(!this.value) this.type='text';">
 </div>
     </div>
