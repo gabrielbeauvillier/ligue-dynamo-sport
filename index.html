@@ -500,27 +500,28 @@ function filterSchedule() {
     const cards = document.querySelectorAll('.match-card');
 
     cards.forEach(card => {
-        let showTeam = (team === 'all' || card.innerText.includes(team));
+        // 1. Logique de détection
+        let content = card.textContent || card.innerText;
+        let showTeam = (team === 'all' || content.includes(team));
         let showDate = true;
 
         if (dateInput) {
-            const day = card.querySelector('.date-day').innerText.padStart(2, '0');
-            const monthText = card.querySelector('.date-month').innerText.toLowerCase();
+            const dayBadge = card.querySelector('.date-day').innerText.padStart(2, '0');
+            const monthBadge = card.querySelector('.date-month').innerText.toLowerCase();
             
-            const selectedDate = new Date(dateInput + "T00:00:00");
-            const selectedDay = selectedDate.getDate().toString().padStart(2, '0');
-            
-            const monthsFR = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-            const selectedMonth = monthsFR[selectedDate.getMonth()];
+            const dateObj = new Date(dateInput + "T00:00:00");
+            const selDay = dateObj.getDate().toString().padStart(2, '0');
+            const months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+            const selMonth = months[dateObj.getMonth()];
 
-            showDate = (day === selectedDay && monthText === selectedMonth);
+            showDate = (dayBadge === selDay && monthBadge === selMonth);
         }
 
-        // LA SOLUTION : On force le mode 'grid' pour le centrage
+        // 2. Application de l'affichage (LA CORRECTION)
         if (showTeam && showDate) {
-            card.style.setProperty('display', 'grid', 'important');
+            card.style.display = 'grid'; // Garde le score au centre
         } else {
-            card.style.display = 'none';
+            card.style.display = 'none'; // Cache le match
         }
     });
 }
