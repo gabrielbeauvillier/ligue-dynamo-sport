@@ -311,9 +311,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
    <div class="control-group">
     <label>Date précise</label>
     <input type="text" id="dateFilter" placeholder="Choisir une date" 
+           readonly 
            onfocus="this.type='date'; this.showPicker();" 
-           onchange="filterSchedule()" 
-           onblur="if(!this.value) this.type='text';">
+           onblur="if(!this.value) this.type='text';" 
+           onchange="filterSchedule()">
 </div>
     </div>
 
