@@ -495,32 +495,33 @@ function toggleMenu(){const m=document.getElementById('accountMenu');m.style.dis
 
   
 function filterSchedule() {
-    const team = document.getElementById('teamFilter').value.toLowerCase();
-    const dateInput = document.getElementById('dateFilter').value; // Format yyyy-mm-dd
-    const cards = document.querySelectorAll('.match-card');
+    try {
+        const team = document.getElementById('teamFilter').value.toLowerCase();
+        const dateInput = document.getElementById('dateFilter').value;
+        const cards = document.querySelectorAll('.match-card');
 
-    cards.forEach(card => {
-        // 1. Recherche par équipe
-        const teamText = card.innerText.toLowerCase();
-        const showTeam = (team === 'all' || teamText.includes(team));
+        for (let i = 0; i < cards.length; i++) {
+            let card = cards[i];
+            let teamText = card.innerText.toLowerCase();
+            let showTeam = (team === 'all' || teamText.includes(team));
+            let showDate = true;
 
-        // 2. Recherche par date (Simple et directe)
-        let showDate = true;
-        if (dateInput) {
-            const [year, month, day] = dateInput.split('-');
-            const dayBadge = card.querySelector('.date-day').innerText.padStart(2, '0');
-            
-            // On compare juste le chiffre du jour pour éviter les erreurs de noms de mois
-            showDate = (dayBadge === day);
+            if (dateInput) {
+                const dayInput = dateInput.split('-')[2];
+                const dayBadge = card.querySelector('.date-day').innerText.padStart(2, '0');
+                showDate = (dayBadge === dayInput);
+            }
+
+            // ON FORCE L'AFFICHAGE CI-DESSOUS
+            if (showTeam && showDate) {
+                card.style.setProperty('display', 'grid', 'important');
+            } else {
+                card.style.setProperty('display', 'none', 'important');
+            }
         }
-
-        // 3. L'affichage (Le point critique)
-        if (showTeam && showDate) {
-            card.style.display = 'grid'; // Utilise 'grid' pour le centrage
-        } else {
-            card.style.display = 'none';
-        }
-    });
+    } catch (e) {
+        console.error("Erreur dans le filtre : ", e);
+    }
 }
 
 </script>
