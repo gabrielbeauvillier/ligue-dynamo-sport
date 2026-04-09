@@ -239,38 +239,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: 700; /* Tout le texte en gras */
     padding: 10px; /* Plus d'espace */
 }
- /* Force l'affichage du format français JJ/MM/AAAA */
-#dateFilter::before {
-    content: attr(data-placeholder);
-    margin-right: 0.5em;
-    color: rgba(255, 255, 255, 0.5);
+#dateFilter {
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    font-weight: 600;
 }
 
-#dateFilter:focus::before,
-#dateFilter:valid::before {
-    content: "";
-    display: none;
+/* Pour s'assurer que le texte "Choisir une date" est bien visible */
+#dateFilter::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
 }
-
-/* Cache le format yyyy-mm-dd par défaut du navigateur */
-#dateFilter::-webkit-datetime-edit-year-field,
-#dateFilter::-webkit-datetime-edit-month-field,
-#dateFilter::-webkit-datetime-edit-day-field,
-#dateFilter::-webkit-datetime-edit-text {
-    color: transparent;
-}
-
-/* Réaffiche les chiffres quand on commence à saisir ou quand c'est sélectionné */
-#dateFilter:focus::-webkit-datetime-edit-year-field,
-#dateFilter:focus::-webkit-datetime-edit-month-field,
-#dateFilter:focus::-webkit-datetime-edit-day-field,
-#dateFilter:focus::-webkit-datetime-edit-text,
-#dateFilter:valid::-webkit-datetime-edit-year-field,
-#dateFilter:valid::-webkit-datetime-edit-month-field,
-#dateFilter:valid::-webkit-datetime-edit-day-field,
-#dateFilter:valid::-webkit-datetime-edit-text {
-    color: white;
-} 
 </style>
 </head>
 
@@ -344,10 +324,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 <option value="Ducks">Ducks</option>
             </select>
         </div>
-        <div class="control-group">
-            <label>Date précise</label>
-            <input type="date" id="dateFilter" onchange="filterSchedule()" onclick="this.showPicker()">
-        </div>
+      <div class="control-group">
+    <label>Date précise</label>
+    <input type="text" id="dateFilter" placeholder="Choisir une date" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" onchange="filterSchedule()" onclick="this.showPicker()">
+</div>
     </div>
 
     <div class="calendar-container" id="calendarContainer">
