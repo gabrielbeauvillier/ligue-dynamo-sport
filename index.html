@@ -39,7 +39,7 @@ nav a:hover{color:white;transform:scale(1.05)}
 section{padding:40px 20px;max-width:1100px;margin:auto;}
 h2{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-/* STYLE DES BOÎTES DE CONTRÔLE (ÉQUIPE & DATE) */
+/* STYLE DES BOÎTES DE CONTRÔLE UNIFIÉ */
 .schedule-controls {
     display: flex;
     gap: 20px;
@@ -69,42 +69,52 @@ h2{background:var(--silver);-webkit-background-clip:text;-webkit-text-fill-color
     font-size: 13px;
 }
 
-/* STYLE MODERNE POUR LE SELECT ET L'INPUT DATE */
-#teamFilter, #dateFilter {
-    width: 100%;
-    background: #0b1e2d;
-    border: 1px solid rgba(79, 195, 247, 0.3);
-    color: white;
-    padding: 14px;
-    border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    outline: none;
-    appearance: none;
+/* STYLE POUR LES INPUTS ET LES SELECTS (UNIFIÉ) */
+.schedule-controls select, 
+.schedule-controls input,
+.flatpickr-input.form-control {
+    width: 100% !important;
+    background: #0b1e2d !important;
+    border: 1px solid rgba(79, 195, 247, 0.3) !important;
+    color: white !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: 0.3s !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    appearance: none !important;
 }
 
-/* Enveloppe pour la flèche personnalisée du menu Équipe */
-.select-wrapper { position: relative; width: 100%; }
-.select-wrapper::after {
-    content: "▼";
-    font-size: 12px;
+/* Wrappers pour ajouter les icônes à droite */
+.custom-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-icon::after { content: "▼"; font-size: 12px; }
+.date-icon::after { content: "📅"; font-size: 16px; }
+
+.select-icon::after, .date-icon::after {
     color: var(--blue);
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+    opacity: 0.8;
 }
 
-#teamFilter:hover, #dateFilter:hover {
-    border-color: var(--blue);
-    background: #0f2f47;
+.schedule-controls select:hover, 
+.schedule-controls input:hover {
+    border-color: var(--blue) !important;
+    background: #0f2f47 !important;
 }
 
-/* STYLE DES CARTES DE MATCHS */
+/* CARTES DE MATCHS */
 .match-card {
     display: grid !important; 
     grid-template-columns: 1fr 1fr 80px 1fr 1fr;
@@ -162,7 +172,7 @@ th, td { padding: 12px; border-bottom: 1px solid #4fc3f7; text-align: center; }
 .account-menu { display: none; position: absolute; top: 60px; right: 20px; background: #123a5a; border-radius: 10px; padding: 10px; z-index: 4; }
 .account-menu a { display: block; padding: 8px; color: white; text-decoration: none; }
 
-/* PERSONNALISATION DU CALENDRIER FLATPICKR */
+/* FLATPICKR DESIGN */
 .flatpickr-calendar { background: #0f2f47 !important; border: 1px solid var(--blue) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;}
 </style>
 </head>
@@ -225,7 +235,7 @@ th, td { padding: 12px; border-bottom: 1px solid #4fc3f7; text-align: center; }
     <div class="schedule-controls">
         <div class="control-group">
             <label>Équipe</label>
-            <div class="select-wrapper">
+            <div class="custom-input-wrapper select-icon">
                 <select id="teamFilter" onchange="filterSchedule()">
                     <option value="all">Toutes les équipes</option>
                     <option value="Thrashers">Thrashers</option>
@@ -237,7 +247,9 @@ th, td { padding: 12px; border-bottom: 1px solid #4fc3f7; text-align: center; }
         </div>
         <div class="control-group">
             <label>Date précise</label>
-            <input type="text" id="dateFilter" placeholder="Choisir une date">
+            <div class="custom-input-wrapper date-icon">
+                <input type="text" id="dateFilter" placeholder="Choisir une date">
+            </div>
         </div>
     </div>
 
@@ -329,17 +341,18 @@ Saison : mi-mai à mi-septembre
 </div>
 </div>
 
-<!-- CHARGEMENT DES SCRIPTS EXTERNES -->
+<!-- SCRIPTS EXTERNES -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
 
 <script>
-// INITIALISATION DU CALENDRIER MODERNE FLATPICKR
+// INITIALISATION DU CALENDRIER MODERNE AVEC FORMATAGE UNIFIÉ
 flatpickr("#dateFilter", {
     locale: "fr",
     dateFormat: "Y-m-d",
     altInput: true,
-    altFormat: "d F Y",
+    altFormat: "j F Y",
+    altInputClass: "form-control", // Force l'application du style harmonisé
     onChange: function() { filterSchedule(); }
 });
 
@@ -354,20 +367,19 @@ const c=document.getElementById('playersList');c.innerHTML='';
 list.forEach(p=>{
 c.innerHTML+=`<div class="player-card" onclick="openPlayer('${p.name}')">${p.name} <span style="float:right; font-size:12px; color:var(--blue);">${p.team}</span></div>`;
 });}
-
 renderPlayers(players);
 
 document.getElementById('search').addEventListener('input',e=>{
-const val=e.target.value.toLowerCase();
-renderPlayers(players.filter(p=>p.name.toLowerCase().includes(val)));
+    const val=e.target.value.toLowerCase();
+    renderPlayers(players.filter(p=>p.name.toLowerCase().includes(val)));
 });
 
 function openPlayer(name){
-const p=players.find(x=>x.name===name);
-document.getElementById('modalName').innerText=p.name;
-document.getElementById('modalTeam').innerText='Équipe: '+p.team;
-document.getElementById('modalStats').innerText=`Buts: ${p.g} | Passes: ${p.a} | Points: ${p.g+p.a}`;
-document.getElementById('playerModal').style.display='flex';
+    const p=players.find(x=>x.name===name);
+    document.getElementById('modalName').innerText=p.name;
+    document.getElementById('modalTeam').innerText='Équipe: '+p.team;
+    document.getElementById('modalStats').innerText=`Buts: ${p.g} | Passes: ${p.a} | Points: ${p.g+p.a}`;
+    document.getElementById('playerModal').style.display='flex';
 }
 
 function closeModal(){document.getElementById('playerModal').style.display='none';}
