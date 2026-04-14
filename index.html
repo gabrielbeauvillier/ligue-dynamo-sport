@@ -57,7 +57,7 @@
         section { padding: 40px 20px; max-width: 1200px; margin: auto; }
         h2 { background: var(--silver); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; text-transform: uppercase; }
 
-        /* --- STYLE DES BOÎTES DE CONTRÔLE UNIFIÉ --- */
+        /* --- STYLE DES BOÎTES DE CONTRÔLE --- */
         .schedule-controls {
             display: flex;
             gap: 20px;
@@ -83,11 +83,9 @@
             margin-bottom: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
             font-size: 13px;
         }
 
-        /* STYLE POUR LES INPUTS ET LES SELECTS */
         .schedule-controls select, 
         .schedule-controls input,
         .flatpickr-input.form-control {
@@ -103,7 +101,7 @@
             cursor: pointer !important;
             transition: 0.3s !important;
             outline: none !important;
-            box-sizing: border-box !important; /* Empêche de déborder */
+            box-sizing: border-box !important;
             appearance: none !important;
         }
 
@@ -131,7 +129,7 @@
             z-index: 2;
         }
 
-        /* --- STYLE TABLEAUX ÉLITE (CLASSEMENT & STATS) --- */
+        /* --- TABLEAUX ÉLITE (CLASSEMENT & STATS) --- */
         .elite-container {
             background: rgba(15, 47, 71, 0.4);
             border-radius: 15px;
@@ -162,13 +160,12 @@
 
         .elite-table tbody tr { background: rgba(255, 255, 255, 0.03); transition: 0.3s; }
         .elite-table tbody tr:hover { background: rgba(79, 195, 247, 0.12); transform: scale(1.005); }
-
         .elite-table td { padding: 15px; font-weight: 600; font-size: 15px; }
 
         .rank-col { font-family: 'Bebas Neue'; font-size: 22px; color: rgba(255,255,255,0.4); width: 60px; }
         tr:nth-child(1) .rank-col { color: var(--gold); text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
 
-        .team-cell { display: flex; align-items: center; gap: 15px; text-align: left; min-width: 200px; }
+        .team-cell { display: flex; align-items: center; gap: 15px; text-align: left; min-width: 180px; }
         .team-tag { font-size: 10px; background: rgba(79, 195, 247, 0.2); color: var(--blue); padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
 
         .active-sort {
@@ -189,13 +186,15 @@
         .score-box { background: #0b1e2d; padding: 8px 18px; border-radius: 8px; font-family: 'Bebas Neue'; font-size: 26px; border: 1px solid rgba(79, 195, 247, 0.3); }
         .match-status { text-align: right; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 15px; }
         .time { display: block; font-size: 18px; font-weight: 700; color: var(--blue); }
+        .location { display: block; font-size: 11px; text-transform: uppercase; opacity: 0.6; }
 
         /* --- COMPTE ET MODAL --- */
         .account-btn { position: absolute; top: 20px; right: 20px; background: rgba(15, 47, 71, 0.9); padding: 10px 15px; border-radius: 25px; color: var(--blue); cursor: pointer; z-index: 3; border: 1px solid rgba(192,192,192,0.4); }
         .account-menu { display: none; position: absolute; top: 60px; right: 20px; background: #123a5a; border-radius: 10px; padding: 10px; z-index: 4; }
+        .account-menu a { display: block; padding: 8px; color: white; text-decoration: none; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 10; }
         .modal-content { background: #123a5a; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--blue); }
-        
+
         /* FLATPICKR DESIGN */
         .flatpickr-calendar { background: #0f2f47 !important; border: 1px solid var(--blue) !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;}
     </style>
@@ -206,9 +205,12 @@
 <header>
     <div class="account-btn" onclick="toggleMenu()">👤 Mon compte</div>
     <div class="account-menu" id="accountMenu">
-        <a href="#" style="display:block; padding:8px; color:white; text-decoration:none;">Mon profil</a>
-        <a href="#" style="display:block; padding:8px; color:white; text-decoration:none;">Mes statistiques</a>
-        <a href="#" style="display:block; padding:8px; color:white; text-decoration:none;">Déconnexion</a>
+        <a href="#">Mon profil</a>
+        <a href="#">Mes statistiques</a>
+        <a href="#">Mon équipe</a>
+        <a href="#">Alignement (Capitaine)</a>
+        <a href="#">Gestion équipe</a>
+        <a href="#">Déconnexion</a>
     </div>
     <div class="content">
         <img src="logo.png" style="width:350px; margin-bottom:-75px;"> 
@@ -229,14 +231,28 @@
 <section id="home">
     <h2>Accueil</h2>
     <p>Bienvenue sur le site officiel de la Ligue Dynamo Sport. Une ligue conçue pour offrir une expérience de hockey balle de qualité avec une gestion sérieuse, un arbitrage rigoureux et une ambiance compétitive.</p>
+
+    <h3>📸 Photos</h3>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
-        <div style="text-align:center;"><img src="surface.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; height:250px; object-fit:cover;"><p>Prêt pour la mise au jeu</p></div>
-        <div style="text-align:center;"><img src="action.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; height:250px; object-fit:cover;"><p>L'action à chaque match</p></div>
+        <div style="text-align:center;">
+            <img src="surface.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; object-fit:cover; height:250px;">
+            <p style="font-size:14px; color:#4fc3f7; font-weight:600; margin-top:10px;">Prêt pour la mise au jeu</p>
+        </div>
+        <div style="text-align:center;">
+            <img src="action.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; object-fit:cover; height:250px;">
+            <p style="font-size:14px; color:#4fc3f7; font-weight:600; margin-top:10px;">L'action à chaque match</p>
+        </div>
     </div>
+
+    <h3>📰 Nouvelles</h3>
+    <p>• Début de la saison prévu à la mi-mai à Princeville<br>
+    • Joueur de la semaine annoncé chaque semaine<br>
+    • Séries éliminatoires en septembre</p>
 </section>
 
 <section id="schedule">
     <h2>Calendrier & Résultats</h2>
+
     <div class="schedule-controls">
         <div class="control-group">
             <label>Équipe</label>
@@ -257,11 +273,25 @@
             </div>
         </div>
     </div>
+
     <div id="calendarContainer">
+        <!-- Match 1 -->
         <div class="match-card" data-date="2025-05-15" data-teams="thrashers canadiens">
             <div class="match-date-badge"><span class="date-day">15</span><span class="date-month">mai</span></div>
             <div class="team-info">Thrashers</div><div class="score-box">4 - 2</div><div class="team-info">Canadiens</div>
             <div class="match-status"><span class="time">19:30</span><span class="location">Princeville</span></div>
+        </div>
+        <!-- Match 2 -->
+        <div class="match-card" data-date="2025-05-16" data-teams="vikings thrashers">
+            <div class="match-date-badge"><span class="date-day">16</span><span class="date-month">mai</span></div>
+            <div class="team-info">Vikings</div><div class="score-box">1 - 3</div><div class="team-info">Thrashers</div>
+            <div class="match-status"><span class="time">20:45</span><span class="location">Princeville</span></div>
+        </div>
+        <!-- Match 3 -->
+        <div class="match-card" data-date="2025-05-17" data-teams="ducks canadiens">
+            <div class="match-date-badge"><span class="date-day">17</span><span class="date-month">mai</span></div>
+            <div class="team-info">Ducks</div><div class="score-box">0 - 0</div><div class="team-info">Canadiens</div>
+            <div class="match-status"><span class="time">18:15</span><span class="location">Princeville</span></div>
         </div>
     </div>
 </section>
@@ -287,6 +317,7 @@
 
 <section id="stats">
     <h2>Statistiques individuelles</h2>
+    <p style="font-size: 11px; color: var(--blue); margin-bottom: 10px;">* Cliquez sur les colonnes MJ, B, P, PTS, DIFF, PUN ou MOY pour trier.</p>
     <div class="elite-container">
         <table class="elite-table" id="statsTable">
             <thead>
@@ -317,12 +348,24 @@
 
 <section id="rules">
     <h2>Règlements</h2>
-    <p>- Respect obligatoire envers les arbitres et les joueurs<br>- Format 4 contre 4<br>- Matchs de 2 périodes<br>- Aucun comportement antisportif toléré</p>
+    <p>
+        - Respect obligatoire envers les arbitres et les joueurs<br>
+        - Format 4 contre 4<br>
+        - Matchs de 2 périodes<br>
+        - Aucun comportement antisportif toléré<br>
+        - Les décisions de l’arbitre sont finales
+    </p>
+    <p><em>Document complet à venir</em></p>
 </section>
 
 <section id="info">
     <h2>Informations</h2>
-    <p>Lieu été : Princeville | Lieu hiver : Victoriaville | Format : 4 contre 4 | Saison : mi-mai à mi-septembre</p>
+    <p>
+        Lieu été : Parc multisport de Princeville<br>
+        Lieu hiver : Pavillon Agri-Sport de Victoriaville<br>
+        Format : 4 contre 4<br>
+        Saison : mi-mai à mi-septembre
+    </p>
 </section>
 
 <div class="modal" id="playerModal"><div class="modal-content"><span class="close" onclick="closeModal()">✖</span><h2 id="modalName"></h2><p id="modalTeam"></p><p id="modalStats"></p></div></div>
@@ -346,7 +389,10 @@
     function calculateAndRenderStats() {
         const body = document.getElementById('statsBody');
         body.innerHTML = '';
-        playersData.forEach(p => { p.pts = p.b + p.p; p.moy = (p.pts / p.mj).toFixed(2); });
+        playersData.forEach(p => { 
+            p.pts = p.b + p.p; 
+            p.moy = (p.pts / p.mj).toFixed(2); 
+        });
         playersData.sort((a, b) => b[currentSort] - a[currentSort]);
         playersData.forEach((p, i) => {
             const diffColor = p.diff >= 0 ? 'diff-pos' : 'diff-neg';
@@ -375,9 +421,29 @@
 
     calculateAndRenderStats();
 
-    // --- AUTRES ---
-    function toggleMenu() { const m = document.getElementById('accountMenu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
+    // --- AUTRES FONCTIONS ---
+    function renderSearchList(list) {
+        const c = document.getElementById('playersList'); c.innerHTML = '';
+        list.forEach(p => { c.innerHTML += `<div class="player-card" onclick="openPlayer('${p.name}')">${p.name} <span style="float:right; font-size:12px; color:var(--blue);">${p.team}</span></div>`; });
+    }
+    renderSearchList(playersData);
+
+    document.getElementById('search').addEventListener('input', e => {
+        const val = e.target.value.toLowerCase();
+        renderSearchList(playersData.filter(p => p.name.toLowerCase().includes(val)));
+    });
+
+    function openPlayer(name) {
+        const p = playersData.find(x => x.name === name);
+        document.getElementById('modalName').innerText = p.name;
+        document.getElementById('modalTeam').innerText = 'Équipe: ' + p.team;
+        document.getElementById('modalStats').innerText = `B: ${p.b} | P: ${p.p} | PTS: ${p.b+p.p} | DIFF: ${p.diff}`;
+        document.getElementById('playerModal').style.display = 'flex';
+    }
+
     function closeModal() { document.getElementById('playerModal').style.display = 'none'; }
+    function toggleMenu() { const m = document.getElementById('accountMenu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
+    
     function filterSchedule() {
         const team = document.getElementById('teamFilter').value.toLowerCase();
         const date = document.getElementById('dateFilter').value; 
@@ -385,7 +451,9 @@
         cards.forEach(c => {
             const cTeams = c.getAttribute('data-teams').toLowerCase();
             const cDate = c.getAttribute('data-date');
-            c.style.display = ((team === 'all' || cTeams.includes(team)) && (!date || date === cDate)) ? 'grid' : 'none';
+            const showTeam = (team === 'all' || cTeams.includes(team));
+            const showDate = (!date || date === cDate);
+            c.style.display = (showTeam && showDate) ? 'grid' : 'none';
         });
     }
 </script>
