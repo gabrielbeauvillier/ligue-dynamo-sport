@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
 
     <style>
-        /* --- STYLE DYNAMO SPORT (STRICTEMENT IDENTIQUE) --- */
+        /* --- STYLE DYNAMO SPORT (STRICTEMENT IDENTIQUE AUX CAPTURES) --- */
         body { margin: 0; font-family: 'Montserrat', Arial; background: #0b1e2d; color: white; --blue: #4fc3f7; --silver: linear-gradient(90deg, #cfd8dc, #90a4ae); --gold: #ffd700; }
         header { position: relative; height: 300px; background: linear-gradient(135deg, #0b1e2d, #16394a); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         header::after { content: ""; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle, rgba(79, 195, 247, 0.15), transparent 60%); animation: glow 10s linear infinite; }
@@ -23,7 +23,6 @@
         h2 { background: var(--silver); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 800; }
         h3 { color: var(--blue); font-family: 'Bebas Neue'; font-size: 28px; margin-top: 30px; letter-spacing: 1px; }
 
-        /* --- TABLEAUX & MATCHS --- */
         .elite-container { background: rgba(15, 47, 71, 0.4); border-radius: 15px; padding: 20px; border: 1px solid rgba(79, 195, 247, 0.2); overflow-x: auto; margin-top: 20px; }
         .elite-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; text-align: center; }
         .elite-table th { padding: 15px; font-family: 'Bebas Neue'; font-size: 18px; color: var(--blue); border-bottom: 2px solid rgba(79, 195, 247, 0.1); }
@@ -32,9 +31,9 @@
         .diff-pos { color: #4caf50; } .diff-neg { color: #ff5252; }
         .team-tag { font-size: 10px; background: rgba(79, 195, 247, 0.2); color: var(--blue); padding: 2px 6px; border-radius: 4px; margin-left: 8px; }
 
-        /* --- DASHBOARD & SECTIONS PRIVÉES --- */
+        /* --- LOGIN & DASHBOARD --- */
         #login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11,30,45,0.98); z-index: 1000; display: none; justify-content: center; align-items: center; }
-        .login-box { background: #0f2f47; padding: 40px; border-radius: 20px; border: 1px solid var(--blue); width: 350px; text-align: center; }
+        .login-box { background: #0f2f47; padding: 40px; border-radius: 20px; border: 1px solid var(--blue); width: 350px; text-align: center; box-shadow: 0 0 30px rgba(79,195,247,0.2); }
         .login-box input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid rgba(79,195,247,0.3); background: #0b1e2d; color: white; box-sizing: border-box; }
         .btn-blue { background: var(--blue); color: #0b1e2d; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; width: 100%; }
         
@@ -42,10 +41,6 @@
         .dash-sidebar { background: rgba(15, 47, 71, 0.6); border-radius: 15px; padding: 15px; height: fit-content; }
         .dash-item { padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
         .dash-item:hover, .dash-item.active { background: var(--blue); color: #0b1e2d; }
-
-        #tactical-board { width: 100%; height: 500px; background: url('https://img.freepik.com/vecteurs-premium/terrain-hockey-glace-vue-dessus_42708-111.jpg') no-repeat center; background-size: contain; position: relative; border: 2px solid var(--blue); border-radius: 10px; background-color: #eee; }
-        .pion { width: 30px; height: 30px; border-radius: 50%; position: absolute; cursor: move; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; border: 2px solid white; z-index: 10; }
-        .pion.blue { background: #2196f3; } .pion.red { background: #f44336; } .pion.cone { background: #ff9800; border-radius: 2px; }
 
         .account-btn { position: absolute; top: 20px; right: 20px; background: rgba(15, 47, 71, 0.9); padding: 10px 15px; border-radius: 25px; color: var(--blue); cursor: pointer; z-index: 3; border: 1px solid rgba(192,192,192,0.4); }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 2000; }
@@ -68,36 +63,41 @@
     <a onclick="showView('schedule')">Calendrier</a>
     <a onclick="showView('standings')">Classement</a>
     <a onclick="showView('stats')">Statistiques</a>
-    <a onclick="showView('players')">Joueurs</a>
     <a onclick="showView('rules')">Règlements</a>
-    <a onclick="showView('info')">Informations</a>
     <a onclick="showView('dashboard')" id="nav-dash" style="display:none; color:var(--gold)">MON ESPACE</a>
 </nav>
 
-<!-- CONNEXION -->
+<!-- CONNEXION / INSCRIPTION -->
 <div id="login-overlay">
     <div class="login-box">
-        <h2 style="color:white; font-family:'Bebas Neue'">Connexion Membre</h2>
+        <h2 id="auth-title" style="color:white; font-family:'Bebas Neue'">Connexion</h2>
+        <div id="register-only-fields" style="display:none;">
+            <input type="text" id="reg-prenom" placeholder="Prénom">
+            <input type="text" id="reg-nom" placeholder="Nom de famille">
+        </div>
         <input type="email" id="email-in" placeholder="Votre courriel">
         <input type="password" id="pass-in" placeholder="Mot de passe">
-        <button class="btn-blue" onclick="authAction()">Se connecter</button>
-        <p onclick="closeLogin()" style="cursor:pointer; font-size:11px; margin-top:20px; opacity:0.6; text-decoration:underline;">Retour au site</p>
+        
+        <button class="btn-blue" id="auth-btn" onclick="processAuth()">Se connecter</button>
+        
+        <p id="toggle-auth-text" style="font-size:12px; margin-top:15px; cursor:pointer; text-decoration:underline;" onclick="toggleAuthMode()">Pas de compte ? Créer un profil</p>
+        <p onclick="closeLogin()" style="cursor:pointer; font-size:11px; margin-top:20px; opacity:0.6;">Retour au site</p>
     </div>
 </div>
 
-<!-- SECTION ACCUEIL (PAGE 1) -->
+<!-- SECTION ACCUEIL (CONTENU PAGE 1) -->
 <section id="v-home">
     <h2>ACCUEIL</h2>
     <p>Bienvenue sur le site officiel de la Ligue Dynamo Sport. Une ligue conçue pour offrir une expérience de hockey balle de qualité avec une gestion sérieuse, un arbitrage rigoureux et une ambiance compétitive.</p>
     <h3>📸 PHOTOS</h3>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
         <div style="text-align:center;">
-            <img src="surface.jpg" style="width:100%; border-radius:10px; border: 2px solid var(--blue); height:250px; object-fit:cover;">
-            <p style="font-size:14px; color:var(--blue); font-weight:600; margin-top:10px;">Prêt pour la mise au jeu</p>
+            <img src="surface.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; height:250px; object-fit:cover;">
+            <p style="font-size:14px; color:#4fc3f7; font-weight:600; margin-top:10px;">Prêt pour la mise au jeu</p>
         </div>
         <div style="text-align:center;">
-            <img src="action.jpg" style="width:100%; border-radius:10px; border: 2px solid var(--blue); height:250px; object-fit:cover;">
-            <p style="font-size:14px; color:var(--blue); font-weight:600; margin-top:10px;">L'action à chaque match</p>
+            <img src="action.jpg" style="width:100%; border-radius:10px; border: 2px solid #4fc3f7; height:250px; object-fit:cover;">
+            <p style="font-size:14px; color:#4fc3f7; font-weight:600; margin-top:10px;">L'action à chaque match</p>
         </div>
     </div>
     <h3>📰 NOUVELLES</h3>
@@ -106,42 +106,38 @@
        • Séries éliminatoires en septembre</p>
 </section>
 
-<!-- SECTION CALENDRIER (PAGE 2) -->
+<!-- CALENDRIER (PAGE 2) -->
 <section id="v-schedule" style="display:none;">
     <h2>CALENDRIER & RÉSULTATS</h2>
-    <div class="elite-container" style="display:flex; gap:20px; padding:20px;">
-        <div style="flex:1"><label>ÉQUIPE</label><br><select style="width:100%; padding:10px; background:#0b1e2d; color:white;"><option>Toutes les équipes</option></select></div>
-        <div style="flex:1"><label>DATE PRÉCISE</label><br><input type="text" placeholder="Choisir une date" style="width:100%; padding:10px; background:#0b1e2d; color:white;"></div>
-    </div>
     <div id="calendarContainer"></div>
 </section>
 
-<!-- SECTION CLASSEMENT (PAGE 3) -->
+<!-- CLASSEMENT (PAGE 3) -->
 <section id="v-standings" style="display:none;">
     <h2>CLASSEMENT GÉNÉRAL</h2>
     <div class="elite-container">
         <table class="elite-table">
             <thead><tr><th>RANG</th><th>ÉQUIPE</th><th>MJ</th><th>VR</th><th>VP</th><th>DP</th><th>D</th><th>PTS</th><th>BP</th><th>BC</th><th>DIFF</th></tr></thead>
-            <tbody id="standingsBody"></tbody>
+            <tbody id="standingsBody">
+                <tr><td class="rank-col">1</td><td>Thrashers</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>6</td><td>7</td><td>3</td><td class="diff-pos">+4</td></tr>
+                <tr><td class="rank-col">2</td><td>Canadiens</td><td>2</td><td>1</td><td>0</td><td>0</td><td>1</td><td>3</td><td>7</td><td>8</td><td class="diff-neg">-1</td></tr>
+            </tbody>
         </table>
     </div>
 </section>
 
-<!-- SECTION STATS (PAGE 4) -->
+<!-- STATS (PAGE 4) -->
 <section id="v-stats" style="display:none;">
     <h2>STATISTIQUES INDIVIDUELLES</h2>
-    <h3>JOUEURS</h3>
-    <div class="elite-container"><table class="elite-table"><thead><tr><th>RANG</th><th>JOUEUR</th><th>MJ</th><th>B</th><th>P</th><th>PTS</th><th>DIFF</th><th>PUN</th><th>MOY</th></tr></thead><tbody id="p-stats-body"></tbody></table></div>
-    <h3>GARDIENS DE BUTS</h3>
-    <div class="elite-container"><table class="elite-table"><thead><tr><th>RANG</th><th>JOUEUR</th><th>MJ</th><th>V</th><th>D</th><th>TC</th><th>ARR</th><th>BC</th><th>%ARR</th><th>MOY</th><th>BL</th></tr></thead><tbody id="g-stats-body"></tbody></table></div>
+    <div class="elite-container">
+        <table class="elite-table">
+            <thead><tr><th>RANG</th><th>JOUEUR</th><th>MJ</th><th>B</th><th>P</th><th>PTS</th><th>DIFF</th><th>PUN</th><th>MOY</th></tr></thead>
+            <tbody id="p-stats-body"></tbody>
+        </table>
+    </div>
 </section>
 
-<!-- SECTION RECHERCHE & RÈGLEMENTS (PAGE 5) -->
-<section id="v-players" style="display:none;">
-    <h2>RECHERCHE JOUEUR</h2>
-    <input type="text" placeholder="Nom du joueur..." style="width:100%; padding:15px; border-radius:10px; background:#0f2f47; color:white; border:1px solid var(--blue);">
-</section>
-
+<!-- RÈGLEMENTS (PAGE 5) -->
 <section id="v-rules" style="display:none;">
     <h2>RÈGLEMENTS OFFICIELS</h2>
     <div class="elite-container" style="height: 800px; padding: 0; overflow: hidden;">
@@ -149,16 +145,7 @@
     </div>
 </section>
 
-<!-- SECTION INFORMATIONS (PAGE 6) -->
-<section id="v-info" style="display:none;">
-    <h2>INFORMATIONS</h2>
-    <p>Lieu été : Parc multisport de Princeville<br>
-       Lieu hiver : Pavillon Agri-Sport de Victoriaville<br>
-       Format : 4 contre 4<br>
-       Saison : mi-mai à mi-septembre</p>
-</section>
-
-<!-- DASHBOARD (NOUVEAU - MON PROFIL) -->
+<!-- ESPACE MEMBRE (DASHBOARD) -->
 <section id="v-dashboard" style="display:none;">
     <div class="dash-layout">
         <div class="dash-sidebar">
@@ -170,28 +157,25 @@
             <div class="dash-item" onclick="askLogout()" style="color:#ff5252; margin-top:20px;">Déconnexion</div>
         </div>
         <div class="dash-content">
+            <!-- MES INFOS -->
             <div id="d-infos" class="tab-content">
                 <h3>Mes informations personnelles</h3>
                 <div class="elite-container" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
                     <div>
                         <img src="https://via.placeholder.com/150" id="u-img" style="width:120px; height:120px; border-radius:50%; border:2px solid var(--blue); object-fit:cover;">
-                        <input type="file" style="font-size:10px; margin-top:10px;">
-                        <input type="text" placeholder="Prénom" style="width:100%; margin-top:10px; padding:8px;">
-                        <input type="text" placeholder="Nom" style="width:100%; margin-top:10px; padding:8px;">
+                        <input type="file" id="img-upload" style="font-size:10px; margin-top:10px;">
+                        <input type="text" id="u-prenom" placeholder="Prénom" style="width:100%; margin-top:10px; padding:8px;">
+                        <input type="text" id="u-nom" placeholder="Nom" style="width:100%; margin-top:10px; padding:8px;">
                     </div>
                     <div>
-                        <input type="text" placeholder="Grandeur" style="width:48%; padding:8px;">
-                        <input type="text" placeholder="Poids" style="width:48%; padding:8px;">
-                        <select style="width:100%; margin-top:10px; padding:8px;"><option>Gaucher</option><option>Droitier</option></select>
-                        <textarea placeholder="Description de votre style de jeu..." style="width:100%; height:80px; margin-top:10px; padding:8px;"></textarea>
-                        <button class="btn-blue">Sauvegarder</button>
+                        <input type="text" id="u-height" placeholder="Grandeur" style="width:48%; padding:8px;">
+                        <input type="text" id="u-weight" placeholder="Poids" style="width:48%; padding:8px;">
+                        <select id="u-tir" style="width:100%; margin-top:10px; padding:8px;"><option>Gaucher</option><option>Droitier</option></select>
+                        <textarea id="u-bio" placeholder="Style de jeu (Défensif, tir élite, etc.)" style="width:100%; height:80px; margin-top:10px; padding:8px;"></textarea>
+                        <button class="btn-blue" onclick="saveProfile()">Sauvegarder</button>
                     </div>
                 </div>
-            </div>
-            <div id="d-cap" class="tab-content" style="display:none">
-                <h3>Tableau Tactique</h3>
-                <div id="tactical-board"></div>
-                <button onclick="addPion('blue')">+ Bleu</button><button onclick="addPion('red')">+ Rouge</button>
+                <p style="font-size:10px; opacity:0.5; margin-top:15px;">ID UNIQUE DYNAMO : <span id="u-id-label">GÉNÉRATION...</span></p>
             </div>
         </div>
     </div>
@@ -210,7 +194,8 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAFZRBrVPo_ucxRYv869iFsd80dCnamMmQ",
@@ -223,70 +208,119 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // DONNÉES INITIALES (PAGE 2, 3, 4)
-    const matches = [
-        { d: "15 MAI", t1: "Thrashers", s: "4-2", t2: "Canadiens", h: "19:30" },
-        { d: "16 MAI", t1: "Vikings", s: "1-3", t2: "Thrashers", h: "20:45" },
-        { d: "17 MAI", t1: "Ducks", s: "0-0", t2: "Canadiens", h: "18:15" },
-        { d: "20 MAI", t1: "Canadiens", s: "5-4", t2: "Vikings", h: "19:30" }
-    ];
+    let isLoginMode = true;
 
+    // --- BASCULE CONNEXION / INSCRIPTION ---
+    window.toggleAuthMode = () => {
+        isLoginMode = !isLoginMode;
+        document.getElementById('auth-title').innerText = isLoginMode ? "Connexion" : "Créer un profil";
+        document.getElementById('auth-btn').innerText = isLoginMode ? "Se connecter" : "S'inscrire";
+        document.getElementById('register-only-fields').style.display = isLoginMode ? "none" : "block";
+        document.getElementById('toggle-auth-text').innerText = isLoginMode ? "Pas de compte ? Créer un profil" : "Déjà un compte ? Se connecter";
+    };
+
+    // --- ACTIONS D'AUTHENTIFICATION ---
+    window.processAuth = async () => {
+        const email = document.getElementById('email-in').value;
+        const pass = document.getElementById('pass-in').value;
+
+        if (isLoginMode) {
+            // MODE CONNEXION
+            if(email === "Admin2026" && pass === "Admin2026") {
+                localStorage.setItem('isAdm', 'true');
+                location.reload();
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                location.reload();
+            } catch(e) { alert("Compte introuvable ou mot de passe erroné."); }
+        } else {
+            // MODE INSCRIPTION
+            const prenom = document.getElementById('reg-prenom').value;
+            const nom = document.getElementById('reg-nom').value;
+            if(!prenom || !nom) { alert("Veuillez entrer votre nom et prénom."); return; }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                const user = userCredential.user;
+                const dynaId = "DYNA-" + Math.floor(100000 + Math.random() * 900000);
+                
+                // Créer le document profil dans Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    prenom: prenom,
+                    nom: nom,
+                    dynaId: dynaId,
+                    role: 'joueur'
+                });
+                location.reload();
+            } catch(e) { alert("Erreur lors de l'inscription : " + e.message); }
+        }
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+        if(user) {
+            document.getElementById('nav-dash').style.display = 'inline';
+            document.getElementById('profileBtn').innerText = "👤 Mon Espace";
+            
+            const docRef = doc(db, "users", user.uid);
+            const snap = await getDoc(docRef);
+            if(snap.exists()) {
+                const data = snap.data();
+                document.getElementById('u-id-label').innerText = data.dynaId;
+                document.getElementById('u-prenom').value = data.prenom || "";
+                document.getElementById('u-nom').value = data.nom || "";
+            }
+        }
+        if(localStorage.getItem('isAdm')) {
+            document.getElementById('nav-dash').style.display = 'inline';
+            document.getElementById('adm-nav').style.display = 'block';
+            document.getElementById('cap-nav').style.display = 'block';
+        }
+    });
+
+    // --- FONCTIONS NAVIGATION ---
+    window.showView = (id) => {
+        document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+        document.getElementById('v-' + id).style.display = 'block';
+    };
+    window.handleProfileNav = () => {
+        if(auth.currentUser || localStorage.getItem('isAdm')) showView('dashboard');
+        else document.getElementById('login-overlay').style.display = 'flex';
+    };
+    window.closeLogin = () => document.getElementById('login-overlay').style.display = 'none';
+    window.askLogout = () => document.getElementById('logout-modal').style.display = 'flex';
+    window.processLogout = () => { signOut(auth); localStorage.clear(); location.reload(); };
+    window.closeLogout = () => document.getElementById('modal-logout').style.display = 'none';
+
+    // --- DONNÉES MATCHS & STATS (REPRIS DE TES CAPTURES) ---
     const players = [
         { n: "Gabriel Beauvillier", t: "Thrashers", mj: 2, b: 5, p: 3, pts: 8, df: "+4", pun: 2, m: "4.00" },
         { n: "Luc Picard", t: "Canadiens", mj: 2, b: 2, p: 4, pts: 6, df: "-1", pun: 0, m: "3.00" },
         { n: "Marc Tremblay", t: "Vikings", mj: 2, b: 3, p: 1, pts: 4, df: "+2", pun: 4, m: "2.00" }
     ];
 
-    // RENDU DES TABLEAUX
     window.onload = () => {
-        const cal = document.getElementById('calendarContainer');
-        cal.innerHTML = matches.map(m => `
-            <div class="match-card">
-                <div style="font-weight:800; color:var(--blue)">${m.d}</div>
-                <div>${m.t1}</div><div class="score-box">${m.s}</div><div>${m.t2}</div>
-                <div style="text-align:right"><span style="color:var(--blue)">${m.h}</span><br><small>PRINCEVILLE</small></div>
-            </div>`).join('');
-
-        document.getElementById('standingsBody').innerHTML = `
-            <tr><td class="rank-col">1</td><td>Thrashers</td><td>2</td><td>2</td><td>0</td><td>0</td><td>0</td><td>6</td><td>7</td><td>3</td><td class="diff-pos">+4</td></tr>
-            <tr><td class="rank-col">2</td><td>Canadiens</td><td>2</td><td>1</td><td>0</td><td>0</td><td>1</td><td>3</td><td>7</td><td>8</td><td class="diff-neg">-1</td></tr>
-        `;
-
         document.getElementById('p-stats-body').innerHTML = players.map((p, i) => `
             <tr><td class="rank-col">${i+1}</td><td>${p.n} <span class="team-tag">${p.t}</span></td><td>${p.mj}</td><td>${p.b}</td><td>${p.p}</td><td class="active-sort">${p.pts}</td><td class="${p.df.includes('+')?'diff-pos':'diff-neg'}">${p.df}</td><td>${p.pun}</td><td>${p.m}</td></tr>
         `).join('');
+        
+        const cal = document.getElementById('calendarContainer');
+        const matches = [
+            { d: "15 MAI", t1: "Thrashers", s: "4-2", t2: "Canadiens", h: "19:30" },
+            { d: "16 MAI", t1: "Vikings", s: "1-3", t2: "Thrashers", h: "20:45" },
+            { d: "17 MAI", t1: "Ducks", s: "0-0", t2: "Canadiens", h: "18:15" },
+            { d: "20 MAI", t1: "Canadiens", s: "5-4", t2: "Vikings", h: "19:30" }
+        ];
+        cal.innerHTML = matches.map(m => `
+            <div class="match-card" style="display:grid; grid-template-columns: 1fr 1fr 80px 1fr 1fr; align-items:center; padding:15px; margin-bottom:10px; background:rgba(255,255,255,0.05); border-radius:10px;">
+                <div style="font-weight:800; color:var(--blue)">${m.d}</div>
+                <div>${m.t1}</div><div style="background:#0b1e2d; padding:5px 15px; border-radius:5px; font-family:'Bebas Neue'; font-size:22px; border:1px solid #4fc3f7;">${m.s}</div><div>${m.t2}</div>
+                <div style="text-align:right; font-size:14px;"><span style="color:var(--blue); font-weight:700;">${m.h}</span><br><small>PRINCEVILLE</small></div>
+            </div>`).join('');
     };
-
-    // NAVIGATION & AUTH
-    window.showView = (id) => {
-        document.querySelectorAll('section').forEach(s => s.style.display = 'none');
-        document.getElementById('v-' + id).style.display = 'block';
-    };
-
-    window.handleProfileNav = () => {
-        if(auth.currentUser || localStorage.getItem('isAdm')) showView('dashboard');
-        else document.getElementById('login-overlay').style.display = 'flex';
-    };
-
-    window.authAction = async () => {
-        const e = document.getElementById('email-in').value;
-        const p = document.getElementById('pass-in').value;
-        if(e === "Admin2026" && p === "Admin2026") { localStorage.setItem('isAdm', 'true'); location.reload(); }
-        else { try { await signInWithEmailAndPassword(auth, e, p); location.reload(); } catch(err) { alert("Erreur"); }}
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        if(user || localStorage.getItem('isAdm')) {
-            document.getElementById('nav-dash').style.display = 'inline';
-            if(localStorage.getItem('isAdm')) { document.getElementById('adm-nav').style.display = 'block'; document.getElementById('cap-nav').style.display = 'block'; }
-        }
-    });
-
-    window.askLogout = () => document.getElementById('logout-modal').style.display = 'flex';
-    window.processLogout = () => { signOut(auth); localStorage.clear(); location.reload(); };
-    window.closeLogout = () => document.getElementById('logout-modal').style.display = 'none';
-    window.closeLogin = () => document.getElementById('login-overlay').style.display = 'none';
 
 </script>
 </body>
