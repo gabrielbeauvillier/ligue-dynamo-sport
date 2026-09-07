@@ -317,7 +317,7 @@
         cal.innerHTML = matches.map(m => `
             <div class="match-card" style="display:grid; grid-template-columns: 1fr 1fr 80px 1fr 1fr; align-items:center; padding:15px; margin-bottom:10px; background:rgba(255,255,255,0.05); border-radius:10px;">
                 <div style="font-weight:800; color:var(--blue)">${m.d}</div>
-                <div>${m.t1}</div><div style="background:#0b1e2d; padding:5px 15px; border-radius:5px; font-family:'Bebas Neue'; font-size:22px; border:1px solid #4fc3f7; text-align:center;">${m.s}</div><div>${m.t2}</div>
+                <div>${m.t1}</div><div style="background:#0b1e2d; padding:5px 15px; border-radius:5px; font-family:'Bebas Neue'; font-size:22px; border:1px solid #4fc3f7; text-align:center;">${m.s}</div><div style="text-align:center;">${m.t2}</div>
                 <div style="text-align:right; font-size:14px;"><span style="color:var(--blue); font-weight:700;">${m.h}</span><br><small>PRINCEVILLE</small></div>
             </div>`).join('');
     };
